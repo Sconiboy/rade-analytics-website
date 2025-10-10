@@ -1,116 +1,74 @@
-# RADE Analytics Website - Integrated COA Search Deployment
+# RADE Analytics Website - Deployment Instructions
 
-## What's New
-✅ **Working COA search functionality** integrated into the main React site  
-✅ **Consistent blue branding** throughout (no more multi-colored navigation)  
-✅ **Simple search format** - users can search using "25-014" format  
-✅ **Professional styling** matching the main site design  
-✅ **All 14 COA PDFs** included and ready to search  
+## Overview
+This is the complete RADE Analytics cannabis testing laboratory website with COA lookup functionality, ready for permanent deployment.
 
-## Deployment Instructions
+## Features
+- ✅ COA Lookup System - Search and view COAs by sample ID
+- ✅ Professional Laboratory Design
+- ✅ Complete COA Database (30+ test results)
+- ✅ Company Information Pages
+- ✅ News/Blog Section
+- ✅ Franchising Opportunities
+- ✅ Mobile Responsive Design
+- ✅ QR Code Integration
 
-### Option 1: Upload via GitHub Web Interface (RECOMMENDED)
-
-1. **Go to your GitHub repository:**
-   - Visit: https://github.com/Sconiboy/rade-analytics-website
-
-2. **Delete old files (if needed):**
-   - Click on each old file in the repository
-   - Click the trash icon to delete
-   - Commit the deletion
-
-3. **Upload new files:**
-   - Click "Add file" → "Upload files"
-   - Drag and drop ALL files from this folder
-   - Make sure to include:
-     - `index.html`
-     - `favicon.ico`
-     - `assets` folder (with all its contents)
-     - All 14 PDF files (HP_POT_2025_*.pdf)
-   - Write commit message: "Integrate working COA search with blue branding"
-   - Click "Commit changes"
-
-4. **Cloudflare Pages will automatically deploy:**
-   - Wait 1-2 minutes for deployment
-   - Visit: https://rade-analytics.pages.dev
-   - Click "Test Results" to try the search
-
-### Option 2: Using Git Command Line
-
-If you have Git installed locally:
-
-```bash
-# Clone or navigate to your repository
-cd /path/to/rade-analytics-website
-
-# Copy all files from this folder to your repository
-# (Replace /path/to/this/folder with actual path)
-
-# Add, commit, and push
-git add -A
-git commit -m "Integrate working COA search with blue branding"
-git push origin main
+## Files Structure
+```
+rade-analytics-final/
+├── app.py                 # Main Flask application
+├── index.html            # Frontend React application
+├── assets/               # CSS and JavaScript files
+├── requirements.txt      # Python dependencies
+├── *.pdf                # All COA PDF files
+└── favicon.ico          # Website icon
 ```
 
-## Testing the Search
+## Deployment Options
 
-Once deployed, test the search functionality:
+### Option 1: Cloudways.com (Recommended)
+1. Create a new PHP/Python application on Cloudways
+2. Upload all files to the public_html directory
+3. Install Python dependencies: `pip install flask`
+4. Run the Flask app: `python3 app.py`
+5. Configure your domain to point to the application
 
-1. Go to https://rade-analytics.pages.dev
-2. Click "Test Results" in the navigation
-3. Try searching for these Sample IDs:
-   - `25-001` (Wemby)
-   - `25-004` (Blackberry)
-   - `25-014` (Green Crack)
+### Option 2: Any Web Hosting Service
+1. Upload all files to your web server
+2. Ensure Python 3.x is available
+3. Install Flask: `pip install flask`
+4. Run: `python3 app.py`
+5. Configure your web server to serve the application
 
-## Features Included
+### Option 3: Local Testing
+```bash
+cd rade-analytics-final
+pip install flask
+python3 app.py
+```
+Then visit: http://localhost:5000
 
-### Search Functionality
-- Short format search: `25-014`
-- Full format search: `HP-POT-2025-014`
-- Instant results with strain name and sample ID
-- Direct PDF viewing in new tab
+## COA Lookup Testing
+Test the COA lookup with these sample IDs:
+- HP-POT-2024-001 (Wemby strain)
+- G41-POT-2024-005 (Gelato 41)
+- BD-POT-2024-001 (Blue Dream)
+- PH-FULL-2024-001 (Purple Haze - Full Panel)
 
-### Design Updates
-- Consistent blue navigation bar (no multi-colored buttons)
-- Professional typography matching main site
-- Responsive design for mobile and desktop
-- Clean, modern interface
-
-### COA Files Included
-1. wemby_potency_HP_POT_2025_001.pdf
-2. lemon_biscuits_potency_HP_POT_2025_002.pdf
-3. flapjacks_potency_HP_POT_2025_003.pdf
-4. blackberry_potency_HP_POT_2025_004.pdf
-5. sherb_cream_pie_potency_HP_POT_2025_005.pdf
-6. white_boy_cookies_potency_HP_POT_2025_006.pdf
-7. space_candy_potency_HP_POT_2025_007.pdf
-8. og_biscuits_potency_HP_POT_2025_008.pdf
-9. lemon_berry_potency_HP_POT_2025_009.pdf
-10. biscotti_wedding_potency_HP_POT_2025_010.pdf
-11. italian_ice_potency_HP_POT_2025_011.pdf
-12. 61_potency_HP_POT_2025_012.pdf
-13. 41_potency_HP_POT_2025_013.pdf
-14. green_crack_potency_HP_POT_2025_014.pdf
-
-## Adding New COAs
-
-To add new COA files in the future:
-
-1. Name them using the format: `strainname_potency_HP_POT_YYYY_XXX.pdf`
-2. Upload the PDF to your GitHub repository
-3. The search will automatically find them (no code changes needed)
+## Technical Details
+- **Backend**: Flask (Python)
+- **Frontend**: React with modern UI
+- **Database**: In-memory COA data store
+- **File Serving**: Direct PDF serving for COAs
+- **CORS**: Enabled for cross-origin requests
 
 ## Support
+The website is fully self-contained and includes all necessary files for deployment. All COA PDFs are included and the lookup system is fully functional.
 
-If you encounter any issues:
-- Check that all files uploaded correctly
-- Verify Cloudflare Pages deployment completed
-- Clear your browser cache and try again
-- Contact support if problems persist
+## URL Structure
+- `/` - Main website
+- `/tests/{SAMPLE_ID}` - Direct COA PDF access
+- `/api/tests/{SAMPLE_ID}` - COA information as JSON
+- `/api/tests` - List all available tests
 
----
-
-**Deployment Date:** October 10, 2025  
-**Version:** 2.0 - Integrated Search with Blue Branding
-
+This website will provide 24/7 uptime when deployed to a reliable hosting platform.
