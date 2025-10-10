@@ -17,6 +17,7 @@
         'HP-POT-2024-011': 'italian_ice_potency_HP_POT_2024_011.pdf',
         'HP-POT-2024-012': '61_potency_HP_POT_2024_012.pdf',
         'HP-POT-2024-013': '41_potency_HP_POT_2024_013.pdf',
+        'HP-POT-2024-014': 'green_crack_potency_HP_POT_2024_014.pdf',
         'G41-POT-2024-005': 'gelato_41_potency_G41_POT_2024_005.pdf',
         'BD-POT-2024-001': 'blue_dream_professional_layout_BD_POT_2024_001.pdf',
         'GC-FULL-2024-001': 'green_crack_full_panel_with_signatures_GC_FULL_2024_001.pdf',
