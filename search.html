@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Results - RADE Analytics</title>
+    <link rel="stylesheet" crossorigin href="/assets/index-DM_JUpjV.css">
+    <style>
+        .search-container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .search-box {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+        .search-btn {
+            background: #2563eb;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 500;
+        }
+        .search-btn:hover {
+            background: #1d4ed8;
+        }
+        .result {
+            margin: 20px 0;
+            padding: 25px;
+            border-radius: 12px;
+        }
+        .success {
+            background: #d1fae5;
+            border: 1px solid #10b981;
+            color: #065f46;
+        }
+        .error {
+            background: #fef2f2;
+            border: 1px solid #f87171;
+            color: #991b1b;
+        }
+        .coa-btn {
+            background: #1f2937;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 15px;
+            font-family: inherit;
+            font-weight: 500;
+        }
+        .coa-btn:hover {
+            background: #374151;
+        }
+        .info-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .info-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .info-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        .secure-icon { background: #dbeafe; color: #2563eb; }
+        .analysis-icon { background: #d1fae5; color: #059669; }
+        @media (max-width: 768px) {
+            .info-section { grid-template-columns: 1fr; gap: 20px; }
+            .search-box { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <div class="min-h-screen bg-gray-50">
+            <!-- Header -->
+            <header class="bg-white shadow-sm">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex justify-between items-center py-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
+                                <span class="text-white font-bold text-xl">R</span>
+                            </div>
+                            <div>
+                                <h1 class="text-2xl font-bold text-gray-900">RADE ANALYTICS</h1>
+                                <p class="text-sm text-gray-600">Cannabis Testing Laboratory</p>
+                            </div>
+                        </div>
+                        <nav class="flex space-x-2">
+                            <a href="/" class="px-4 py-2 rounded-lg text-white font-medium" style="background: #22c55e;">Home</a>
+                            <a href="#about" class="px-4 py-2 rounded-lg text-white font-medium" style="background: #3b82f6;">About Us</a>
+                            <a href="#services" class="px-4 py-2 rounded-lg text-white font-medium" style="background: #f59e0b;">Services</a>
+                            <a href="#news" class="px-4 py-2 rounded-lg text-white font-medium" style="background: #8b5cf6;">News</a>
+                            <a href="/search.html" class="px-4 py-2 rounded-lg text-white font-medium" style="background: #06b6d4;">Test Results</a>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="py-12">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-12">
+                        <h1 class="text-4xl font-bold text-gray-900 mb-4">Certificate of Analysis Lookup</h1>
+                        <p class="text-xl text-gray-600">Enter your Sample ID or Batch ID below to view your complete Certificate of Analysis.</p>
+                    </div>
+
+                    <div class="search-container">
+                        <div class="search-box">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">Find Your Test Results</h3>
+                            <p class="text-gray-600 mb-6">Enter your Sample ID (e.g., 25-004)</p>
+                            
+                            <input type="text" id="sampleId" class="search-input" placeholder="Enter Sample ID (e.g., 25-004)" maxlength="10">
+                            <br>
+                            <button onclick="searchCOA()" class="search-btn">🔍 Search</button>
+                            
+                            <div id="result"></div>
+                        </div>
+                    </div>
+
+                    <div class="info-section">
+                        <div class="info-card">
+                            <div class="info-icon secure-icon">🔒</div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Secure & Confidential</h3>
+                            <p class="text-gray-600">All test results are securely stored and only accessible with the correct Sample ID or Batch ID. Your laboratory data is protected with industry-standard security measures.</p>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-icon analysis-icon">📊</div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Complete Analysis</h3>
+                            <p class="text-gray-600">Each Certificate of Analysis includes comprehensive testing results for cannabinoids, pesticides, heavy metals, microbials, mycotoxins, residual solvents, and moisture content.</p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Footer -->
+            <footer class="bg-gray-900 text-white py-12">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center">
+                        <h3 class="text-2xl font-bold mb-6">Contact RADE Analytics</h3>
+                        <div class="flex justify-center space-x-8 flex-wrap">
+                            <div class="mb-4">
+                                <strong>Phone:</strong> (725) 228-6600
+                            </div>
+                            <div class="mb-4">
+                                <strong>Email:</strong> info@rade.llc
+                            </div>
+                            <div class="mb-4">
+                                <strong>Location:</strong> 4439 Polaris Ave, Las Vegas NV 89103
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // COA files list - searches through actual filenames
+        const COA_FILES = [
+            'wemby_potency_HP_POT_2025_001.pdf',
+            'lemon_biscuits_potency_HP_POT_2025_002.pdf',
+            'flapjacks_potency_HP_POT_2025_003.pdf',
+            'blackberry_potency_HP_POT_2025_004.pdf',
+            'sherb_cream_pie_potency_HP_POT_2025_005.pdf',
+            'white_boy_cookies_potency_HP_POT_2025_006.pdf',
+            'space_candy_potency_HP_POT_2025_007.pdf',
+            'og_biscuits_potency_HP_POT_2025_008.pdf',
+            'lemon_berry_potency_HP_POT_2025_009.pdf',
+            'biscotti_wedding_potency_HP_POT_2025_010.pdf',
+            'italian_ice_potency_HP_POT_2025_011.pdf',
+            '61_potency_HP_POT_2025_012.pdf',
+            '41_potency_HP_POT_2025_013.pdf',
+            'green_crack_potency_HP_POT_2025_014.pdf'
+        ];
+        
+        function searchCOA() {
+            const input = document.getElementById('sampleId').value.trim();
+            const result = document.getElementById('result');
+            
+            if (!input) {
+                result.innerHTML = '<div class="error" style="margin-top: 20px;">Please enter a Sample ID</div>';
+                return;
+            }
+            
+            // Convert short format (25-004) to full format (HP-POT-2025-004)
+            let searchTerm = input;
+            if (input.match(/^\d{2}-\d{3}$/)) {
+                const [year, num] = input.split('-');
+                searchTerm = `HP_POT_20${year}_${num}`;
+            }
+            
+            // Search through filenames for exact match
+            const matchingFile = COA_FILES.find(filename => filename.includes(searchTerm));
+            
+            if (matchingFile) {
+                // Extract strain name from filename
+                const strainName = matchingFile.split('_potency_')[0].replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                
+                // Extract full sample ID from filename
+                const fullSampleId = matchingFile.match(/HP_POT_\d{4}_\d{3}/)[0].replace(/_/g, '-');
+                
+                result.innerHTML = `
+                    <div class="success" style="margin-top: 20px;">
+                        <h4 style="margin: 0 0 15px 0; font-size: 18px;">✅ COA Found!</h4>
+                        <p style="margin: 8px 0; font-size: 16px;"><strong>Sample ID:</strong> ${fullSampleId}</p>
+                        <p style="margin: 8px 0; font-size: 16px;"><strong>Strain:</strong> ${strainName}</p>
+                        <a href="${matchingFile}" target="_blank" class="coa-btn">📄 View Complete Certificate of Analysis</a>
+                    </div>
+                `;
+            } else {
+                result.innerHTML = `<div class="error" style="margin-top: 20px;">❌ No COA found for "${input}". Please check the Sample ID and try again.</div>`;
+            }
+        }
+        
+        document.getElementById('sampleId').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') searchCOA();
+        });
+    </script>
+</body>
+</html>
