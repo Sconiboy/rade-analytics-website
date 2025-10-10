@@ -74,11 +74,9 @@
             transition: all 0.2s;
         }
 
-        .nav-btn.home { background: #dcfce7; color: #166534; }
-        .nav-btn.about { background: #dbeafe; color: #1d4ed8; }
-        .nav-btn.services { background: #fed7aa; color: #c2410c; }
-        .nav-btn.news { background: #f3e8ff; color: #7c3aed; }
-        .nav-btn.results { background: #cffafe; color: #0f766e; }
+        .nav-btn { background: #e0f2fe; color: #0369a1; }
+        .nav-btn:hover { background: #bae6fd; color: #0c4a6e; }
+        .nav-btn.active { background: #2563eb; color: white; }
 
         .hero {
             text-align: center;
@@ -358,11 +356,11 @@
                 </div>
             </div>
             <div class="nav-buttons">
-                <button class="nav-btn home" onclick="showSection('home')">Home</button>
-                <button class="nav-btn about" onclick="showSection('about')">About Us</button>
-                <button class="nav-btn services" onclick="showSection('services')">Services</button>
-                <button class="nav-btn news" onclick="showSection('news')">News</button>
-                <button class="nav-btn results" onclick="showSection('results')">Test Results</button>
+                <button class="nav-btn" onclick="showSection('home')">Home</button>
+                <button class="nav-btn" onclick="showSection('about')">About Us</button>
+                <button class="nav-btn" onclick="showSection('services')">Services</button>
+                <button class="nav-btn" onclick="showSection('news')">News</button>
+                <button class="nav-btn" onclick="showSection('results')">Test Results</button>
             </div>
         </nav>
     </header>
