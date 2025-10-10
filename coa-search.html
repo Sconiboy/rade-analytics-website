@@ -43,9 +43,9 @@
 
             <div class="search-box">
                 <h3 style="color: #1f2937; margin: 0 0 20px 0;">Find Your COA</h3>
-                <p style="color: #6b7280; margin-bottom: 20px;">Enter Sample ID (e.g., HP-POT-2025-001)</p>
+                <p style="color: #6b7280; margin-bottom: 20px;">Enter Sample ID (e.g., 25-004)</p>
                 
-                <input type="text" id="sampleId" class="search-input" placeholder="Enter Sample ID" maxlength="20">
+                <input type="text" id="sampleId" class="search-input" placeholder="Enter Sample ID (e.g., 25-004)" maxlength="10">
                 <button onclick="searchCOA()" class="search-btn">Search</button>
                 
                 <div id="result"></div>
@@ -84,7 +84,7 @@
         ];
         
         function searchCOA() {
-            const input = document.getElementById('sampleId').value.trim().toUpperCase();
+            const input = document.getElementById('sampleId').value.trim();
             const result = document.getElementById('result');
             
             if (!input) {
@@ -92,19 +92,28 @@
                 return;
             }
             
+            // Convert short format (25-004) to full format (HP-POT-2025-004)
+            let searchTerm = input;
+            if (input.match(/^\d{2}-\d{3}$/)) {
+                const [year, num] = input.split('-');
+                searchTerm = `HP_POT_20${year}_${num}`;
+            }
+            
             // Search through filenames for exact match
-            const matchingFile = COA_FILES.find(filename => filename.includes(input));
+            const matchingFile = COA_FILES.find(filename => filename.includes(searchTerm));
             
             if (matchingFile) {
                 // Extract strain name from filename
                 const strainName = matchingFile.split('_potency_')[0].replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
                 
+                // Extract full sample ID from filename
+                const fullSampleId = matchingFile.match(/HP_POT_\d{4}_\d{3}/)[0].replace(/_/g, '-');
+                
                 result.innerHTML = `
                     <div class="success" style="margin-top: 15px;">
                         <h4 style="margin: 0 0 10px 0;">COA Found!</h4>
-                        <p style="margin: 5px 0;"><strong>Sample ID:</strong> ${input}</p>
+                        <p style="margin: 5px 0;"><strong>Sample ID:</strong> ${fullSampleId}</p>
                         <p style="margin: 5px 0;"><strong>Strain:</strong> ${strainName}</p>
-                        <p style="margin: 5px 0 15px 0;"><strong>File:</strong> ${matchingFile}</p>
                         <a href="${matchingFile}" target="_blank" class="coa-btn">View Certificate of Analysis</a>
                     </div>
                 `;
