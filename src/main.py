@@ -47,16 +47,16 @@ COA_DATA = {
 @app.route('/')
 def index():
     """Serve the main website"""
-    return send_from_directory('.', 'index.html')
+    return send_from_directory('..', 'index.html')
 
 @app.route('/<path:path>')
 def static_files(path):
     """Serve static files"""
     try:
-        return send_from_directory('.', path)
+        return send_from_directory('..', path)
     except:
         # If file not found, serve index.html for SPA routing
-        return send_from_directory('.', 'index.html')
+        return send_from_directory('..', 'index.html')
 
 @app.route('/tests/<sample_id>')
 def get_coa(sample_id):
@@ -65,7 +65,7 @@ def get_coa(sample_id):
         return jsonify({"error": "Sample ID not found"}), 404
     
     coa_info = COA_DATA[sample_id]
-    pdf_path = os.path.join(os.path.dirname(__file__), coa_info['file'])
+    pdf_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), coa_info['file'])
     
     if not os.path.exists(pdf_path):
         return jsonify({"error": "COA file not found"}), 404
