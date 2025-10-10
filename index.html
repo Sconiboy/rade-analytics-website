@@ -1,14 +1,575 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RADE Analytics - Cannabis Testing Laboratory</title>
-    <script type="module" crossorigin src="/assets/index-BwQOrrjo.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-DM_JUpjV.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-circle {
+            width: 40px;
+            height: 40px;
+            background: #2563eb;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .logo-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav-btn.home { background: #dcfce7; color: #166534; }
+        .nav-btn.about { background: #dbeafe; color: #1d4ed8; }
+        .nav-btn.services { background: #fed7aa; color: #c2410c; }
+        .nav-btn.news { background: #f3e8ff; color: #7c3aed; }
+        .nav-btn.results { background: #cffafe; color: #0f766e; }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+        }
+
+        .hero-logo {
+            width: 120px;
+            height: 120px;
+            background: #2563eb;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 3rem;
+            margin: 0 auto 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero .subtitle {
+            font-size: 1.2rem;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero .accreditation {
+            color: #2563eb;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .hero .description {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            color: #4b5563;
+            font-size: 1.1rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        .coa-lookup {
+            background: white;
+            padding: 3rem 2rem;
+            margin: 2rem auto;
+            max-width: 800px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .coa-lookup h2 {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #1f2937;
+        }
+
+        .coa-lookup p {
+            text-align: center;
+            color: #6b7280;
+            margin-bottom: 2rem;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            min-width: 250px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .search-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .search-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .result {
+            background: #dcfce7;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .result h3 {
+            color: #166534;
+            margin-bottom: 1rem;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .result-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .result-label {
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .result-value {
+            color: #1f2937;
+        }
+
+        .view-coa-btn {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .view-coa-btn:hover {
+            background: #b91c1c;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .feature h3 {
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .feature p {
+            color: #6b7280;
+        }
+
+        .contact {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .contact h2 {
+            margin-bottom: 2rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-item h3 {
+            color: #60a5fa;
+            margin-bottom: 0.5rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-buttons {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .search-form {
+                flex-direction: column;
+            }
+
+            .search-input {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">
+                <div class="logo-circle">R</div>
+                <div>
+                    <div class="logo-text">RADE ANALYTICS</div>
+                    <div style="font-size: 0.8rem; color: #6b7280;">Cannabis Testing Laboratory</div>
+                </div>
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn home" onclick="showSection('home')">Home</button>
+                <button class="nav-btn about" onclick="showSection('about')">About Us</button>
+                <button class="nav-btn services" onclick="showSection('services')">Services</button>
+                <button class="nav-btn news" onclick="showSection('news')">News</button>
+                <button class="nav-btn results" onclick="showSection('results')">Test Results</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-logo">R</div>
+            <h1>RADE ANALYTICS</h1>
+            <div class="subtitle">Cannabis Testing Laboratory</div>
+            <div class="accreditation">ISO/IEC 17025:2017 Accredited</div>
+            <p class="description">
+                Leading cannabis testing laboratory providing comprehensive analytical services with 
+                state-of-the-art equipment and rigorous quality standards to ensure product safety and compliance.
+            </p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="showSection('results')">View Test Results</button>
+                <button class="btn btn-secondary" onclick="showSection('services')">Our Services</button>
+            </div>
+        </section>
+
+        <section id="results" class="coa-lookup hidden">
+            <h2>Certificate of Analysis Lookup</h2>
+            <p>Enter your Sample ID or Batch ID below to view your complete Certificate of Analysis.</p>
+            
+            <div class="search-form">
+                <input type="text" id="sampleId" class="search-input" placeholder="Enter Sample ID or Batch ID" />
+                <button class="search-btn" onclick="searchCOA()">Search</button>
+            </div>
+
+            <div id="searchResult" class="hidden"></div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+                <div style="text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">🔒</div>
+                    <h3>Secure & Confidential</h3>
+                    <p>All test results are securely stored and only accessible with the correct Sample ID or Batch ID. Your laboratory data is protected with industry-standard security measures.</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">📋</div>
+                    <h3>Complete Analysis</h3>
+                    <p>Each Certificate of Analysis includes comprehensive testing results for cannabinoids, pesticides, heavy metals, microbials, mycotoxins, residual solvents, and moisture content.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="hidden" style="padding: 3rem 2rem; max-width: 800px; margin: 0 auto;">
+            <h2 style="text-align: center; margin-bottom: 2rem;">About RADE Analytics</h2>
+            <p style="margin-bottom: 1rem;">RADE Analytics is a state-of-the-art cannabis testing laboratory committed to providing accurate, reliable, and comprehensive analytical services to the cannabis industry.</p>
+            <p style="margin-bottom: 1rem;">Our ISO/IEC 17025:2017 accredited facility utilizes advanced instrumentation and rigorous quality control procedures to ensure the highest standards of testing accuracy and reliability.</p>
+            <p>We specialize in complete safety and potency testing, helping cannabis businesses meet regulatory requirements and ensure product quality for consumers.</p>
+        </section>
+
+        <section id="services" class="features hidden">
+            <div class="feature">
+                <h3>Cannabinoid Analysis</h3>
+                <p>Comprehensive cannabinoid profiling using HPLC technology to determine THC, CBD, CBG, and other cannabinoids with precision.</p>
+            </div>
+            <div class="feature">
+                <h3>Safety Testing</h3>
+                <p>Complete safety panel including pesticides, heavy metals, microbials, mycotoxins, and residual solvents testing.</p>
+            </div>
+            <div class="feature">
+                <h3>Moisture & Terpenes</h3>
+                <p>Moisture content analysis and comprehensive terpene profiling to ensure product quality and compliance.</p>
+            </div>
+        </section>
+
+        <section id="news" class="hidden" style="padding: 3rem 2rem; max-width: 800px; margin: 0 auto;">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Latest News</h2>
+            <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                <h3 style="color: #dc2626; margin-bottom: 1rem;">Wisconsin Hemp Ban Update</h3>
+                <p style="margin-bottom: 1rem;">Recent regulatory changes in Wisconsin have impacted hemp product distribution. Our laboratory continues to provide comprehensive testing services to ensure compliance with evolving regulations.</p>
+                <p style="color: #6b7280; font-size: 0.9rem;">Published: October 2024</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="contact">
+        <h2>Contact RADE Analytics</h2>
+        <div class="contact-grid">
+            <div class="contact-item">
+                <h3>Phone</h3>
+                <p>(725) 228-6600</p>
+            </div>
+            <div class="contact-item">
+                <h3>Email</h3>
+                <p>info@rade.llc</p>
+            </div>
+            <div class="contact-item">
+                <h3>Location</h3>
+                <p>4439 Polaris Ave, Las Vegas NV 89103</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // COA Database
+        const COA_DATA = {
+            'HP-POT-2024-001': { strain: 'Wemby', customer: 'HEMPATHY', thc: '28.57%', cbd: '1.87%', file: 'wemby_potency_HP_POT_2024_001.pdf' },
+            'HP-POT-2024-002': { strain: 'Lemon Biscuits', customer: 'HEMPATHY', thc: '31.23%', cbd: '2.45%', file: 'lemon_biscuits_potency_HP_POT_2024_002.pdf' },
+            'HP-POT-2024-003': { strain: 'Flapjacks', customer: 'HEMPATHY', thc: '29.88%', cbd: '3.12%', file: 'flapjacks_potency_HP_POT_2024_003.pdf' },
+            'HP-POT-2024-004': { strain: 'Blackberry', customer: 'HEMPATHY', thc: '26.54%', cbd: '4.78%', file: 'blackberry_potency_HP_POT_2024_004.pdf' },
+            'HP-POT-2024-005': { strain: 'Sherb Cream Pie', customer: 'HEMPATHY', thc: '30.12%', cbd: '2.34%', file: 'sherb_cream_pie_potency_HP_POT_2024_005.pdf' },
+            'HP-POT-2024-006': { strain: 'White Boy Cookies', customer: 'HEMPATHY', thc: '32.79%', cbd: '1.56%', file: 'white_boy_cookies_potency_HP_POT_2024_006.pdf' },
+            'HP-POT-2024-007': { strain: 'Space Candy', customer: 'HEMPATHY', thc: '27.65%', cbd: '3.67%', file: 'space_candy_potency_HP_POT_2024_007.pdf' },
+            'HP-POT-2024-008': { strain: 'OG Biscuits', customer: 'HEMPATHY', thc: '29.35%', cbd: '2.89%', file: 'og_biscuits_potency_HP_POT_2024_008.pdf' },
+            'HP-POT-2024-009': { strain: 'Lemon Berry', customer: 'HEMPATHY', thc: '33.21%', cbd: '1.23%', file: 'lemon_berry_potency_HP_POT_2024_009.pdf' },
+            'HP-POT-2024-010': { strain: 'Biscotti Wedding', customer: 'HEMPATHY', thc: '28.90%', cbd: '4.23%', file: 'biscotti_wedding_potency_HP_POT_2024_010.pdf' },
+            'HP-POT-2024-011': { strain: 'Italian Ice', customer: 'HEMPATHY', thc: '31.57%', cbd: '3.45%', file: 'italian_ice_potency_HP_POT_2024_011.pdf' },
+            'HP-POT-2024-012': { strain: '61', customer: 'HEMPATHY', thc: '30.45%', cbd: '2.67%', file: '61_potency_HP_POT_2024_012.pdf' },
+            'HP-POT-2024-013': { strain: '41', customer: 'HEMPATHY', thc: '29.78%', cbd: '3.89%', file: '41_potency_HP_POT_2024_013.pdf' },
+            'G41-POT-2024-005': { strain: 'Gelato 41', customer: 'Premium Cannabis', thc: '31.45%', cbd: '2.12%', file: 'gelato_41_potency_G41_POT_2024_005.pdf' },
+            'BD-POT-2024-001': { strain: 'Blue Dream', customer: 'Premium Cannabis', thc: '28.90%', cbd: '3.45%', file: 'blue_dream_professional_layout_BD_POT_2024_001.pdf' },
+            'GC-FULL-2024-001': { strain: 'Green Crack', customer: 'Premium Cannabis', thc: '28.73%', cbd: '0.49%', file: 'green_crack_full_panel_with_signatures_GC_FULL_2024_001.pdf' },
+            'TEST-FULL-001': { strain: 'Test Strain', customer: 'HEMPATHY', thc: '29.35%', cbd: '2.89%', file: 'test_strain_full_panel_TEST-FULL-001.pdf' }
+        };
+
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = ['home', 'about', 'services', 'news', 'results'];
+            sections.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.classList.add('hidden');
+                }
+            });
+
+            // Show selected section
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.remove('hidden');
+            }
+        }
+
+        function searchCOA() {
+            const sampleId = document.getElementById('sampleId').value.trim().toUpperCase();
+            const resultDiv = document.getElementById('searchResult');
+
+            if (!sampleId) {
+                alert('Please enter a Sample ID or Batch ID');
+                return;
+            }
+
+            const coa = COA_DATA[sampleId];
+            
+            if (coa) {
+                resultDiv.innerHTML = `
+                    <div class="result">
+                        <h3>Test Result Found</h3>
+                        <div class="result-grid">
+                            <div class="result-item">
+                                <span class="result-label">Sample ID:</span>
+                                <span class="result-value">${sampleId}</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Test Type:</span>
+                                <span class="result-value">Potency</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Strain:</span>
+                                <span class="result-value">${coa.strain}</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">THC:</span>
+                                <span class="result-value">${coa.thc}</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Customer:</span>
+                                <span class="result-value">${coa.customer}</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">CBD:</span>
+                                <span class="result-value">${coa.cbd}</span>
+                            </div>
+                        </div>
+                        <button class="view-coa-btn" onclick="viewCOA('${coa.file}')">
+                            📄 View Complete Certificate of Analysis
+                        </button>
+                    </div>
+                `;
+                resultDiv.classList.remove('hidden');
+            } else {
+                resultDiv.innerHTML = `
+                    <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1.5rem; color: #dc2626;">
+                        <h3>No Results Found</h3>
+                        <p>Sample ID "${sampleId}" was not found in our database. Please check the ID and try again.</p>
+                        <p style="margin-top: 1rem; font-size: 0.9rem;">Sample IDs are case-sensitive. Common formats: HP-POT-2024-001, G41-POT-2024-005</p>
+                    </div>
+                `;
+                resultDiv.classList.remove('hidden');
+            }
+        }
+
+        function viewCOA(filename) {
+            // Open the PDF file directly
+            window.open(filename, '_blank');
+        }
+
+        // Allow Enter key to search
+        document.getElementById('sampleId').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchCOA();
+            }
+        });
+
+        // Show home section by default
+        showSection('home');
+    </script>
+</body>
 </html>
