@@ -1,0 +1,11 @@
+# Redirect old QR codes and URLs to Test Results page
+
+# Old test URLs
+/tests/* /test-results 301
+/coa/* /test-results 301
+/tests /test-results 301
+/coa /test-results 301
+
+# Any 404 errors go to Test Results page (for old QR codes)
+/* /test-results 404
+
