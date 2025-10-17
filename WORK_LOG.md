@@ -64,3 +64,38 @@ Need to add conditional fields based on product type:
 - Mobile navigation fixed with hamburger menu
 - All buttons on Specials/Affiliates pages now navigate to Contact form
 
+
+
+## Form Requirements for COA Generation (Added by Manus Instance 2)
+
+See **FORM_REQUIREMENTS.md** for complete details on additional fields needed for automated COA generation.
+
+### Key Requirements Summary:
+- **Strain/Product Name** (text field - required)
+- **Batch/Lot Number** (text field - required)
+- **Number of Samples** (number - required, determines how many COAs to generate)
+
+### Product-Specific Fields:
+- **Edibles**: Servings per package, Total package weight, mg per serving
+- **Vape/Carts**: Cart size dropdown (0.5g, 1g, 2g)
+- **Concentrates**: Concentrate type dropdown (Shatter, Wax, Live Resin, etc.)
+
+### Optional Fields:
+- Sample Received Date (defaults to today)
+- Testing Completion Date (defaults to 3-5 days out)
+- Special Instructions/Notes
+
+### COA Generation Workflow:
+1. Customer submits form → emails to bpipkin@gmail.com
+2. System generates invoice
+3. Wait for payment confirmation
+4. Generate COAs with unique data per sample
+5. Email COAs to customer
+
+### Sample ID Format:
+- Potency: CT-POT-2025-001, CT-POT-2025-002, etc.
+- Full Panel: CT-FULL-2025-001, CT-FULL-2025-002, etc.
+
+---
+*Updated: 2025-10-17 - Form requirements documented for COA automation*
+
