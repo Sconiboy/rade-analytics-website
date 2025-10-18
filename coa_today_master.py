@@ -268,13 +268,13 @@ def create_coa_today(filename, data):
     
     bar_width = 0.5*inch
     max_height = 1.3*inch
-    max_val = 35
+    max_val = 100  # Fixed 0-100% scale for all samples
     x_start = 1.5*inch
     spacing = 1.1*inch
     
     for i, (name, val, color_hex) in enumerate(bars):
         x = x_start + (i * spacing)
-        bar_h = (val / max_val) * max_height
+        bar_h = (val / max_val) * max_height  # Scale to 100%
         
         c.setFillColor(colors.HexColor(color_hex))
         c.rect(x, y - max_height, bar_width, bar_h, fill=1)
@@ -284,7 +284,7 @@ def create_coa_today(filename, data):
         c.drawCentredString(x + bar_width/2, y - max_height - 0.15*inch, name)
     
     c.setFont("Helvetica", 7)
-    for val in [0, 10, 20, 30]:
+    for val in [0, 25, 50, 75, 100]:
         y_pos = y - max_height + (val/max_val) * max_height
         c.drawRightString(x_start - 0.1*inch, y_pos - 0.03*inch, str(val))
     
