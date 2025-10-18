@@ -18,28 +18,41 @@
   - Main Cannabinoid (THCa, THCP, CBD, CBN, Delta-9)
   - Target Percentage (optional)
   
-### TODO: Product-Specific Fields
-Need to add conditional fields based on product type:
+### ✅ COMPLETED: Product-Specific Fields
+All conditional fields added based on product type:
 
 **Edible:**
-- mg per piece
-- number of pieces
+- ✅ Servings per package (required)
+- ✅ Total package weight in grams (required)
+- ✅ mg per serving (optional)
 
 **Vape/Cart:**
-- cartridge size (0.5g, 1g, 2g, etc.)
+- ✅ Cartridge size: 0.5g, 1g, 2g (required)
 
 **Concentrate:**
-- concentrate type (shatter, wax, rosin, live resin, etc.)
-- weight
+- ✅ Concentrate type dropdown (required)
+- ✅ Weight (optional)
 
 **Pre-Roll:**
-- weight per pre-roll
-- number in pack
+- ✅ Weight per pre-roll
+- ✅ Number in pack
 
 **Infused Pre-Roll:**
-- weight per pre-roll
-- number in pack
-- infusion type (hash rosin, distillate, diamonds, etc.)
+- ✅ Weight per pre-roll
+- ✅ Number in pack
+- ✅ Infusion type dropdown
+
+### ✅ COMPLETED: Universal Fields Added
+- ✅ Batch/Lot Number (required)
+- ✅ Number of Samples (required) - generates multiple COAs
+- ✅ Sample Received Date (defaults to today)
+- ✅ Testing Completion Date (optional)
+- ✅ Special Instructions/Notes (optional)
+
+### Form Submission
+- ✅ Sends to bpipkin@gmail.com
+- ✅ Calculates total samples and price correctly
+- ✅ Subject: 🧪 TEST SUBMISSION - COA Today
 
 ### Invoices
 - Invoice #002: High Society 420 - $975 (39 potency tests @ $25)
