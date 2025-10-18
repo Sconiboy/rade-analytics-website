@@ -70,8 +70,19 @@ def create_chromatogram_image(peaks_data):
             # Create Gaussian peak centered at retention time
             # Width proportional to retention time (later peaks are wider)
             sigma = 0.15 + (rt / 100)
-            # Height proportional to value
-            amplitude = value
+            
+            # Boost minor cannabinoid visibility using logarithmic scaling
+            # This makes small peaks visible while maintaining relative proportions
+            if value < 1.0:
+                # For minor cannabinoids (< 1%), boost to minimum 8% of max for visibility
+                amplitude = max(value, max_value * 0.08)
+            elif value < 5.0:
+                # For medium cannabinoids (1-5%), boost to minimum 15% of max
+                amplitude = max(value, max_value * 0.15)
+            else:
+                # For major cannabinoids (> 5%), use actual value
+                amplitude = value
+            
             peak = amplitude * np.exp(-((x_range - rt) ** 2) / (2 * sigma ** 2))
             
             # Fill under the curve with solid color
@@ -79,9 +90,8 @@ def create_chromatogram_image(peaks_data):
             
             # Add peak label at the top
             peak_max_idx = np.argmax(peak)
-            # Adjust label threshold based on scale
-            label_threshold = y_max * 0.02  # 2% of max scale
-            if amplitude > label_threshold:
+            # Label all peaks that are visible
+            if amplitude > max_value * 0.05:  # Label peaks > 5% of max
                 ax.text(x_range[peak_max_idx], peak[peak_max_idx] + (y_max * 0.02), name,
                        ha='center', va='bottom', fontsize=7, color=color_hex, fontweight='bold')
     
