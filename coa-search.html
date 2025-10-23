@@ -283,9 +283,9 @@
 
             <div class="search-box">
                 <h3>Find Your COA</h3>
-                <p>Enter Sample ID (e.g., 25-004)</p>
+                <p>Enter Sample ID (e.g., HS-POT-2025-001 or 25-001)</p>
                 
-                <input type="text" id="sampleId" class="search-input" placeholder="Enter Sample ID (e.g., 25-004)" maxlength="10">
+                <input type="text" id="sampleId" class="search-input" placeholder="Enter Sample ID" maxlength="20">
                 <button onclick="searchCOA()" class="search-btn">Search</button>
                 
                 <div id="result"></div>
@@ -306,26 +306,71 @@
     </footer>
 
     <script>
-        // COA files list - searches through actual filenames
-        const COA_FILES = [
-            'wemby_potency_HP_POT_2025_001.pdf',
-            'lemon_biscuits_potency_HP_POT_2025_002.pdf',
-            'flapjacks_potency_HP_POT_2025_003.pdf',
-            'blackberry_potency_HP_POT_2025_004.pdf',
-            'sherb_cream_pie_potency_HP_POT_2025_005.pdf',
-            'white_boy_cookies_potency_HP_POT_2025_006.pdf',
-            'space_candy_potency_HP_POT_2025_007.pdf',
-            'og_biscuits_potency_HP_POT_2025_008.pdf',
-            'lemon_berry_potency_HP_POT_2025_009.pdf',
-            'biscotti_wedding_potency_HP_POT_2025_010.pdf',
-            'italian_ice_potency_HP_POT_2025_011.pdf',
-            '61_potency_HP_POT_2025_012.pdf',
-            '41_potency_HP_POT_2025_013.pdf',
-            'green_crack_potency_HP_POT_2025_014.pdf'
-        ];
+        // COA Database - All available certificates
+        const COA_DATABASE = {
+            "coas": [
+                // High Society 420 - 40 COAs
+                {"sampleId": "HS-POT-2025-001", "strainName": "Blooberry", "productType": "Flower", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/CmYKwolqqzZYkfVw.pdf"},
+                {"sampleId": "HS-POT-2025-002", "strainName": "Pop Rocks", "productType": "Flower", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/GXfTwslnxuyRDDtj.pdf"},
+                {"sampleId": "HS-POT-2025-003", "strainName": "Chile Verde", "productType": "Flower", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/HJMhrFfzAYQbUWOn.pdf"},
+                {"sampleId": "HS-POT-2025-004", "strainName": "Sherb Cake", "productType": "Flower", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/yjQkhRFdQwkrgRqh.pdf"},
+                {"sampleId": "HS-POT-2025-005", "strainName": "Italian Ice", "productType": "Flower", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/hlSNajtVXVPFhyDa.pdf"},
+                {"sampleId": "HS-POT-2025-006", "strainName": "Girl Scout Glue", "productType": "Flower", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/puQOPxGPYxdtFKYj.pdf"},
+                {"sampleId": "HS-POT-2025-007", "strainName": "Cinnarolls", "productType": "Flower", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/GrItkgMknHzsjRpz.pdf"},
+                {"sampleId": "HS-POT-2025-008", "strainName": "Pineapple Express", "productType": "Pre-Roll", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/dmfsFyLMSUMPXvSv.pdf"},
+                {"sampleId": "HS-POT-2025-009", "strainName": "Lemon Berry", "productType": "Pre-Roll", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/IjDqwtgslaxlYjsx.pdf"},
+                {"sampleId": "HS-POT-2025-010", "strainName": "Grape Cream Pie", "productType": "Pre-Roll", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/BVrNinclLCKJgJlB.pdf"},
+                {"sampleId": "HS-POT-2025-011", "strainName": "Hash Rosin Blueberry Pre Roll", "productType": "Infused Pre-Roll", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/rNlrtVcTLvRHGRtJ.pdf"},
+                {"sampleId": "HS-POT-2025-012", "strainName": "Hash Rosin Lemon 33 Pre Roll", "productType": "Infused Pre-Roll", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/xMteAPIZAyAXtXtB.pdf"},
+                {"sampleId": "HS-POT-2025-013", "strainName": "Full Melt Blue Diesel Pre Roll", "productType": "Infused Pre-Roll", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/ObHPZhWMJEhsJPQz.pdf"},
+                {"sampleId": "HS-POT-2025-014", "strainName": "Full Melt G33 x Purple Punch", "productType": "Infused Pre-Roll", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/yVCDqTZabygnWwTO.pdf"},
+                {"sampleId": "HS-POT-2025-015", "strainName": "Shatter Mental Blast Pre Roll", "productType": "Infused Pre-Roll", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/XsvYiwVuwDnIkmNs.pdf"},
+                {"sampleId": "HS-POT-2025-016", "strainName": "Diamond Sweet Don Pre Roll", "productType": "Infused Pre-Roll", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/UQFgAMTkILIcwdRM.pdf"},
+                {"sampleId": "HS-POT-2025-017", "strainName": "Diamond Mango Spark Pre Roll", "productType": "Infused Pre-Roll", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/ZoebkUpkrXIUKIGt.pdf"},
+                {"sampleId": "HS-POT-2025-018", "strainName": "Purple Punch Cart", "productType": "Vape Cart", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/TOXjEGAIaJAEOKzl.pdf"},
+                {"sampleId": "HS-POT-2025-019", "strainName": "Blueberry Cart", "productType": "Vape Cart", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/KPBKEotCzmYybGCU.pdf"},
+                {"sampleId": "HS-POT-2025-020", "strainName": "Ice Cream Cookies Cart", "productType": "Vape Cart", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/pTxQBIrScSWyFKlD.pdf"},
+                {"sampleId": "HS-POT-2025-021", "strainName": "Pink Panther Cart", "productType": "Vape Cart", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/stxbAxXiXyDmbFoa.pdf"},
+                {"sampleId": "HS-POT-2025-022", "strainName": "Pie Hoe Cart", "productType": "Vape Cart", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/FjgdORfkLOZrpvES.pdf"},
+                {"sampleId": "HS-POT-2025-023", "strainName": "Unicorn Piss Cart", "productType": "Vape Cart", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/esMoRXSeVhvHNcgE.pdf"},
+                {"sampleId": "HS-POT-2025-024", "strainName": "Watermelon Cooler Cart", "productType": "Vape Cart", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/NXXFhIiOQLfxjvWH.pdf"},
+                {"sampleId": "HS-POT-2025-025", "strainName": "Super Lemon Haze Cart", "productType": "Vape Cart", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/puoAnrGezugBxbju.pdf"},
+                {"sampleId": "HS-POT-2025-026", "strainName": "Acapulco Gold Cart", "productType": "Vape Cart", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/mtQRGqeNeCtHcRls.pdf"},
+                {"sampleId": "HS-POT-2025-027", "strainName": "Island Juice Cart", "productType": "Vape Cart", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/tzeUbifhutxhVYRV.pdf"},
+                {"sampleId": "HS-POT-2025-028", "strainName": "Lime Acai Cart", "productType": "Vape Cart", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/TOPCUWGpOpLtxhYB.pdf"},
+                {"sampleId": "HS-POT-2025-029", "strainName": "Switch Live Diamond Vape Larry Breath & Crunch Berries", "productType": "Vape Cart", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/wtJcJNUeZLxhjBBH.pdf"},
+                {"sampleId": "HS-POT-2025-030", "strainName": "Switch Vape Live Diamond Papaya Pie & Blueberry Gelato", "productType": "Vape Cart", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/TKMphiEWwPFaHaLW.pdf"},
+                {"sampleId": "HS-POT-2025-031", "strainName": "Switch Live Diamond Vape Super Boof & Grape Sorbet", "productType": "Vape Cart", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/rkrEspuQHJeYsAVs.pdf"},
+                {"sampleId": "HS-POT-2025-032", "strainName": "Switch Live Diamond Vape Unicorn Cake & Guava Daiquiri", "productType": "Vape Cart", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/RaFQSDTVHmotWEed.pdf"},
+                {"sampleId": "HS-POT-2025-033", "strainName": "Live Diamond Vape Pineapple Express", "productType": "Vape Cart", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/gGhDwjNGqbLuQbsq.pdf"},
+                {"sampleId": "HS-POT-2025-034", "strainName": "Live Diamond Vape Blueberry", "productType": "Vape Cart", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/PDYUENEyRslCsHqa.pdf"},
+                {"sampleId": "HS-POT-2025-035", "strainName": "Blue Razz Dweeb 600mg", "productType": "Edible", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/LxDlsJfqzVgIqLXf.pdf"},
+                {"sampleId": "HS-POT-2025-036", "strainName": "Green Apple Dweebs 600mg", "productType": "Edible", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/eluJyWMLGwarzDOr.pdf"},
+                {"sampleId": "HS-POT-2025-037", "strainName": "Cook n Cream 600mg", "productType": "Edible", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/pBJmuMarhFcIFEEk.pdf"},
+                {"sampleId": "HS-POT-2025-038", "strainName": "50 Peanut Butter 600mg", "productType": "Edible", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/QchluruWcNrzSqCg.pdf"},
+                {"sampleId": "HS-POT-2025-039", "strainName": "Static Sift Hash", "productType": "Concentrate", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/jsVXlCtzMSKRsAtw.pdf"},
+                {"sampleId": "HS-POT-2025-040", "strainName": "Fresh Frozen Bubble Hash Full Melt", "productType": "Concentrate", "client": "High Society 420", "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663029794276/IqzDTXFTEflETLHR.pdf"},
+                
+                // Legacy Hempathy COAs (kept for backward compatibility)
+                {"sampleId": "HP-POT-2025-001", "strainName": "Wemby", "productType": "Flower", "client": "Hempathy", "url": "wemby_potency_HP_POT_2025_001.pdf"},
+                {"sampleId": "HP-POT-2025-002", "strainName": "Lemon Biscuits", "productType": "Flower", "client": "Hempathy", "url": "lemon_biscuits_potency_HP_POT_2025_002.pdf"},
+                {"sampleId": "HP-POT-2025-003", "strainName": "Flapjacks", "productType": "Flower", "client": "Hempathy", "url": "flapjacks_potency_HP_POT_2025_003.pdf"},
+                {"sampleId": "HP-POT-2025-004", "strainName": "Blackberry", "productType": "Flower", "client": "Hempathy", "url": "blackberry_potency_HP_POT_2025_004.pdf"},
+                {"sampleId": "HP-POT-2025-005", "strainName": "Sherb Cream Pie", "productType": "Flower", "client": "Hempathy", "url": "sherb_cream_pie_potency_HP_POT_2025_005.pdf"},
+                {"sampleId": "HP-POT-2025-006", "strainName": "White Boy Cookies", "productType": "Flower", "client": "Hempathy", "url": "white_boy_cookies_potency_HP_POT_2025_006.pdf"},
+                {"sampleId": "HP-POT-2025-007", "strainName": "Space Candy", "productType": "Flower", "client": "Hempathy", "url": "space_candy_potency_HP_POT_2025_007.pdf"},
+                {"sampleId": "HP-POT-2025-008", "strainName": "OG Biscuits", "productType": "Flower", "client": "Hempathy", "url": "og_biscuits_potency_HP_POT_2025_008.pdf"},
+                {"sampleId": "HP-POT-2025-009", "strainName": "Lemon Berry", "productType": "Flower", "client": "Hempathy", "url": "lemon_berry_potency_HP_POT_2025_009.pdf"},
+                {"sampleId": "HP-POT-2025-010", "strainName": "Biscotti Wedding", "productType": "Flower", "client": "Hempathy", "url": "biscotti_wedding_potency_HP_POT_2025_010.pdf"},
+                {"sampleId": "HP-POT-2025-011", "strainName": "Italian Ice", "productType": "Flower", "client": "Hempathy", "url": "italian_ice_potency_HP_POT_2025_011.pdf"},
+                {"sampleId": "HP-POT-2025-012", "strainName": "61", "productType": "Flower", "client": "Hempathy", "url": "61_potency_HP_POT_2025_012.pdf"},
+                {"sampleId": "HP-POT-2025-013", "strainName": "41", "productType": "Flower", "client": "Hempathy", "url": "41_potency_HP_POT_2025_013.pdf"},
+                {"sampleId": "HP-POT-2025-014", "strainName": "Green Crack", "productType": "Flower", "client": "Hempathy", "url": "green_crack_potency_HP_POT_2025_014.pdf"}
+            ]
+        };
         
         function searchCOA() {
-            const input = document.getElementById('sampleId').value.trim();
+            const input = document.getElementById('sampleId').value.trim().toUpperCase();
             const result = document.getElementById('result');
             
             if (!input) {
@@ -333,33 +378,39 @@
                 return;
             }
             
-            // Convert short format (25-004) to full format (HP-POT-2025-004)
-            let searchTerm = input;
+            // Normalize input - support multiple formats
+            let searchId = input;
+            
+            // Convert short format (25-001) to full format (HS-POT-2025-001)
             if (input.match(/^\d{2}-\d{3}$/)) {
                 const [year, num] = input.split('-');
-                searchTerm = `HP_POT_20${year}_${num}`;
+                searchId = `HS-POT-20${year}-${num}`;
             }
             
-            // Search through filenames for exact match
-            const matchingFile = COA_FILES.find(filename => filename.includes(searchTerm));
+            // Search database for exact match
+            const matchingCOA = COA_DATABASE.coas.find(coa => 
+                coa.sampleId.toUpperCase() === searchId
+            );
             
-            if (matchingFile) {
-                // Extract strain name from filename
-                const strainName = matchingFile.split('_potency_')[0].replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-                
-                // Extract full sample ID from filename
-                const fullSampleId = matchingFile.match(/HP_POT_\d{4}_\d{3}/)[0].replace(/_/g, '-');
-                
+            if (matchingCOA) {
                 result.innerHTML = `
                     <div class="success">
-                        <h4>COA Found!</h4>
-                        <p><strong>Sample ID:</strong> ${fullSampleId}</p>
-                        <p><strong>Strain:</strong> ${strainName}</p>
-                        <a href="${matchingFile}" target="_blank" class="coa-btn">View Certificate of Analysis</a>
+                        <h4>✓ COA Found!</h4>
+                        <p><strong>Sample ID:</strong> ${matchingCOA.sampleId}</p>
+                        <p><strong>Product:</strong> ${matchingCOA.strainName}</p>
+                        <p><strong>Type:</strong> ${matchingCOA.productType}</p>
+                        <p><strong>Client:</strong> ${matchingCOA.client}</p>
+                        <a href="${matchingCOA.url}" target="_blank" class="coa-btn">View Certificate of Analysis</a>
                     </div>
                 `;
             } else {
-                result.innerHTML = `<div class="error">No COA found for "${input}". Please check the Sample ID and try again.</div>`;
+                result.innerHTML = `
+                    <div class="error">
+                        <p><strong>No COA found for "${input}"</strong></p>
+                        <p>Please check the Sample ID and try again.</p>
+                        <p style="margin-top: 0.5rem; font-size: 0.875rem;">Supported formats: HS-POT-2025-001, HP-POT-2025-001, or 25-001</p>
+                    </div>
+                `;
             }
         }
         
