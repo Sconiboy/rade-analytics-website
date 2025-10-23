@@ -48,6 +48,22 @@
         margin-top: 12px;
         font-style: italic;
       }
+      /* Hide Submit Test button from main navigation */
+      button:has-text("Submit Test"),
+      [data-page="submit-test"],
+      nav button:nth-child(11) {
+        display: none !important;
+      }
+      /* Small footer link styling */
+      .footer-submit-link {
+        font-size: 10px;
+        color: #999;
+        text-decoration: none;
+        opacity: 0.6;
+      }
+      .footer-submit-link:hover {
+        opacity: 1;
+      }
     </style>
   </head>
   <body>
@@ -60,7 +76,7 @@
         Our new URL will be <a href="https://coa.today" target="_blank">https://coa.today</a>
       </p>
       <p>
-        All tests and projects created before <strong>November 1, 2025</strong> will retain RADE branding but will be accessible through the new COA Today platform.
+        All tests and projects created before <strong>November 1, 2025</strong> will retain RADE Analytics branding. After November 1, 2025, RADE Analytics will transition to COA TODAY branding, but all historical RADE tests will remain accessible.
       </p>
       <p>
         Same great team. Same quality testing. Better prices. Wider range of services.
@@ -70,5 +86,40 @@
       </p>
     </div>
     <div id="root"></div>
+    <script>
+      // Wait for React to render, then hide Submit Test button
+      setTimeout(() => {
+        // Find and hide all buttons containing "Submit Test"
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach(btn => {
+          if (btn.textContent.includes('Submit Test')) {
+            btn.style.display = 'none';
+          }
+        });
+        
+        // Add small footer link for Submit Test
+        const footer = document.querySelector('footer');
+        if (footer) {
+          const submitLink = document.createElement('a');
+          submitLink.href = '#';
+          submitLink.className = 'footer-submit-link';
+          submitLink.textContent = 'Submit Test';
+          submitLink.style.cssText = 'font-size: 10px; color: #666; opacity: 0.5; margin-left: 15px;';
+          submitLink.onclick = (e) => {
+            e.preventDefault();
+            const submitBtn = Array.from(document.querySelectorAll('button')).find(b => b.textContent.includes('Submit Test'));
+            if (submitBtn) submitBtn.click();
+          };
+          
+          const footerBottom = footer.querySelector('.border-t');
+          if (footerBottom) {
+            const linkContainer = footerBottom.querySelector('.flex.gap-6');
+            if (linkContainer) {
+              linkContainer.appendChild(submitLink);
+            }
+          }
+        }
+      }, 1000);
+    </script>
   </body>
 </html>
