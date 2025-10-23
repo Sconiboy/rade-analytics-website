@@ -69,8 +69,16 @@ def create_qr_code(url):
     # Return the file path for ReportLab to use
     return temp_file.name
 
-def create_cannabinoid_chart():
-    """Create cannabinoid bar chart - LOCKED VERSION"""
+def create_cannabinoid_chart(thc_pct, cbd_pct, cbg_pct, cbn_pct, cbc_pct):
+    """Create cannabinoid bar chart with dynamic scaling - LOCKED VERSION
+    
+    Args:
+        thc_pct: THCa percentage (float)
+        cbd_pct: CBD percentage (float)
+        cbg_pct: CBG percentage (float)
+        cbn_pct: CBN percentage (float)
+        cbc_pct: CBC percentage (float)
+    """
     drawing = Drawing(400, 150)
     
     chart = VerticalBarChart()
@@ -80,15 +88,16 @@ def create_cannabinoid_chart():
     chart.width = 300
     
     chart.data = [
-        [27.89, 0.187, 0.234, 0.145, 0.189]
+        [thc_pct, cbd_pct, cbg_pct, cbn_pct, cbc_pct]
     ]
     
     chart.categoryAxis.categoryNames = ['THCa', 'CBD', 'CBG', 'CBN', 'CBC']
     chart.categoryAxis.labels.fontSize = 9
     chart.categoryAxis.labels.angle = 0
     
+    # Dynamic scaling: always 0-100% for consistency
     chart.valueAxis.valueMin = 0
-    chart.valueAxis.valueMax = 30
+    chart.valueAxis.valueMax = 100
     chart.valueAxis.labels.fontSize = 9
     
     chart.bars[0].fillColor = colors.Color(0.2, 0.4, 0.8)
@@ -112,7 +121,8 @@ def create_hplc_chromatogram(sample_id='DEFAULT'):
     import random
     
     # Generate unique but consistent retention times based on sample_id
-    seed_value = sum(ord(c) for c in sample_id)
+    # Use hash() for better uniqueness than simple sum
+    seed_value = abs(hash(sample_id)) % (2**31)  # Ensure positive 32-bit integer
     random.seed(seed_value)
     drawing = Drawing(400, 120)
     
@@ -549,30 +559,7 @@ def create_locked_one_page_potency_template(
     story.append(totals_table)
     story.append(Spacer(1, 3))
     
-    # Cannabinoid chart - compact
-    chart_table = Table([[create_cannabinoid_chart()]], colWidths=[7*inch])
-    chart_table.setStyle(TableStyle([
-        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-        ('BOX', (0, 0), (-1, -1), 1, colors.Color(0.8, 0.8, 0.8)),
-        ('BACKGROUND', (0, 0), (-1, -1), colors.Color(0.98, 0.98, 0.98)),
-    ]))
-    
-    story.append(chart_table)
-    story.append(Spacer(1, 3))
-    
-    # HPLC chromatogram - compact
-    chromato_table = Table([[create_hplc_chromatogram(sample_id)]], colWidths=[7*inch])
-    chromato_table.setStyle(TableStyle([
-        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-        ('BOX', (0, 0), (-1, -1), 1, colors.Color(0.8, 0.8, 0.8)),
-        ('BACKGROUND', (0, 0), (-1, -1), colors.Color(0.98, 0.98, 0.98)),
-    ]))
-    
-    story.append(chromato_table)
-    story.append(Spacer(1, 3))
-    
-    # Detailed cannabinoid profile - full width (removed TOTAL THC/CBD columns)
-    # Calculate individual cannabinoid values from THC/CBD input
+    # Calculate individual cannabinoid values from THC/CBD input BEFORE creating chart
     # All values rounded to 2 decimal places
     import random
     
@@ -594,7 +581,30 @@ def create_locked_one_page_potency_template(
     cbga_pct = round(random.uniform(0.50, 0.95), 2)
     cbc_pct = round(random.uniform(0.10, 0.25), 2)
     
-    # Convert to mg/g (multiply by 10 for 1g sample)
+    # Cannabinoid chart - compact - NOW WITH ACTUAL VALUES
+    chart_table = Table([[create_cannabinoid_chart(thca_pct, cbd_pct, cbg_pct, cbn_pct, cbc_pct)]], colWidths=[7*inch])
+    chart_table.setStyle(TableStyle([
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('BOX', (0, 0), (-1, -1), 1, colors.Color(0.8, 0.8, 0.8)),
+        ('BACKGROUND', (0, 0), (-1, -1), colors.Color(0.98, 0.98, 0.98)),
+    ]))
+    
+    story.append(chart_table)
+    story.append(Spacer(1, 3))
+    
+    # HPLC chromatogram - compact
+    chromato_table = Table([[create_hplc_chromatogram(sample_id)]], colWidths=[7*inch])
+    chromato_table.setStyle(TableStyle([
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('BOX', (0, 0), (-1, -1), 1, colors.Color(0.8, 0.8, 0.8)),
+        ('BACKGROUND', (0, 0), (-1, -1), colors.Color(0.98, 0.98, 0.98)),
+    ]))
+    
+    story.append(chromato_table)
+    story.append(Spacer(1, 3))
+    
+    # Detailed cannabinoid profile - full width (removed TOTAL THC/CBD columns)
+    # Cannabinoid values already calculated above, now convert to mg/g
     d9_thc_mg = round(d9_thc_pct * 10, 2)
     thca_mg = round(thca_pct * 10, 2)
     cbd_mg = round(cbd_pct * 10, 2)
