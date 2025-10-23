@@ -462,7 +462,7 @@ def create_locked_one_page_potency_template(
     
     # Header with logo, contact info, and QR code
     header_data = [
-        [create_rade_logo(), '4439 Polaris Ave, Las Vegas NV 89103\ninfo@rade.llc | 725-228-6600\nISO/IEC 17025:2017 Accredited', qr_image]
+        [create_rade_logo(), '4439 Polaris Ave, Las Vegas NV 89103\ninfo@rade.llc\nISO/IEC 17025:2017 Accredited', qr_image]
     ]
     
     header_table = Table(header_data, colWidths=[2.5*inch, 3.5*inch, 1*inch], rowHeights=[50])
@@ -683,7 +683,7 @@ def create_locked_one_page_potency_template(
     
     # 🔒 LOCKED: Footer - single line to save space
     footer_data = [
-        ['Page 1 of 1', 'RADE ANALYTICS | 4439 Polaris Ave, Las Vegas NV 89103 | info@rade.llc | 725-228-6600', '']
+        ['Page 1 of 1', 'RADE ANALYTICS | 4439 Polaris Ave, Las Vegas NV 89103 | info@rade.llc', '']
     ]
     
     footer_table = Table(footer_data, colWidths=[1.5*inch, 5*inch, 0.5*inch])
